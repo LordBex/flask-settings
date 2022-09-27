@@ -1,0 +1,9 @@
+<div class="settings-page" setting-page-key="{{ setting_page.key }}">
+    <div class="settings-title h2"> {{ setting_page.title }} </div>
+    <hr/>
+    <div class="settings-group-container">
+        {% for setting_group in setting_page.loop_groups() %}
+            {% include 'flasky_settings/settings_group.html' %}
+        {% endfor %}
+    </div>
+</div>

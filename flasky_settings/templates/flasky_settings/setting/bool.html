@@ -1,0 +1,9 @@
+<!-- BoolElement -->
+<div class="d-flex justify-content-between align-items-center">
+    {% include 'flasky_settings/setting/sub/title_div.html' %}
+
+    <div class="form-check form-switch">
+        <input class="form-check-input observed-input" type="checkbox" role="switch" {% if setting_group[element.key] %} checked {% endif %}>
+    </div>
+</div>
+
