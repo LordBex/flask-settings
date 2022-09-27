@@ -1,0 +1,2 @@
+recursive-include flasky_settings/templates *
+recursive-include flasky_settings/static *

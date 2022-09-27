@@ -19,9 +19,9 @@ def create_blueprint(flask_app, name: str = 'settings'):
         template_folder="templates",
         static_folder="static"
     )
-    blueprint.add_app_template_global(name, name='__flask_settings_name__')
+    blueprint.add_app_template_global(name, name='__flasky_settings_name__')
 
-    from flask_settings import main
+    from flasky_settings import main
 
     return blueprint
 

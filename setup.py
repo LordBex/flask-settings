@@ -9,15 +9,15 @@ def read(fname):
 
 
 setup(
-    name='flask-settings',
+    name='flasky-settings',
     version='0.0.1',
-    url='https://github.com/LordBex/flask-settings',
+    url='https://github.com/LordBex/flasky-settings',
     license='',
     author='lordbex',
     author_email='lordibex@protonmail.com',
     description='Flask extension that includes a Settings-Manager in your project',
     long_description=read('README.md'),
-    packages=['flask_settings', 'flask_settings.settings'],
+    packages=['flasky_settings', 'flasky_settings.settings'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',

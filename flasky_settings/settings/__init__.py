@@ -1,5 +1,5 @@
-from flask_settings.error import ValidationError, PropertyPermissionError
-from flask_settings import logger
+from flasky_settings.error import ValidationError, PropertyPermissionError
+from flasky_settings import logger
 import os
 import codecs
 import json
@@ -8,7 +8,7 @@ codec_string = 'utf-8'
 
 
 class SettingsElement:
-    template = '/flask_settings/setting/default.html'
+    template = '/flasky_settings/setting/default.html'
     settings_type = 'default'
     _none_allowed: bool = False
     _default = None

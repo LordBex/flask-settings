@@ -4,7 +4,7 @@ import * as ElementParser from './element_parser.js'
 const html_element = $('settings_meta')
 
 // load_configs_from_document
-const settings_endpoint = $(html_element).attr('endpoint').replace(/\/$/gm, '');        // url for the flask-settings endpoint
+const settings_endpoint = $(html_element).attr('endpoint').replace(/\/$/gm, '');        // url for the flasky-settings endpoint
 
 
 // set state functions 

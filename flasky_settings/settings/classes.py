@@ -1,9 +1,9 @@
-from flask_settings.settings import SettingsElement, SettingClass
-from flask_settings.error import ValidationError, ParsingError
+from flasky_settings.settings import SettingsElement, SettingClass
+from flasky_settings.error import ValidationError, ParsingError
 
 
 class SE_Bool(SettingsElement):
-    template = '/flask_settings/setting/bool.html'
+    template = '/flasky_settings/setting/bool.html'
     settings_type = 'bool'
     _none_allowed = True
 
@@ -30,7 +30,7 @@ class SE_Bool(SettingsElement):
 
 
 class SE_String(SettingsElement):
-    template = '/flask_settings/setting/string.html'
+    template = '/flasky_settings/setting/string.html'
     settings_type = 'string'
     input_type = 'text'
     _default = ''
@@ -45,7 +45,7 @@ class SE_String(SettingsElement):
 
 
 class SE_String_Split(SettingsElement):     # TODO Mach das mit einem HTML Template mit add und remove function
-    template = '/flask_settings/setting/string.html'
+    template = '/flasky_settings/setting/string.html'
     settings_type = 'string'
     input_type = 'text'
     _default = []
@@ -68,7 +68,7 @@ class SE_String_Split(SettingsElement):     # TODO Mach das mit einem HTML Templ
 
 
 class SE_Text(SettingsElement):
-    template = '/flask_settings/setting/text.html'
+    template = '/flasky_settings/setting/text.html'
     settings_type = 'text'
 
     def to_validation(self, v) -> (bool, str):
@@ -81,7 +81,7 @@ class SE_Text(SettingsElement):
 
 
 class SE_MultiSelect(SettingsElement):
-    template = '/flask_settings/setting/multi_select_as_list.html'
+    template = '/flasky_settings/setting/multi_select_as_list.html'
     settings_type = 'multi-select'
 
     def to_validation(self, v) -> (bool, str):
@@ -103,7 +103,7 @@ class SE_MultiSelect(SettingsElement):
 
 
 class SE_Select(SettingsElement):
-    template = '/flask_settings/setting/select.html'
+    template = '/flasky_settings/setting/select.html'
     settings_type = 'select'
 
     def to_validation(self, v) -> (bool, str):
