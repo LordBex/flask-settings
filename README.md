@@ -1,2 +1,4 @@
 # flask-settings
-Settings-Manager for Flask
+
+Flask extension that includes a Settings-Manager in your project
+

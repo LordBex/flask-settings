@@ -1,0 +1,15 @@
+<div class="settings-group" setting-group-key="{{ setting_group.key }}">
+    <div class="settings-title h4"> {{ setting_group.title }} </div> <span class="open-changes badge bg-warning text-dark">Öffenen Änderungen</span>
+    <div class="settings-element-container row">
+        {% for element in setting_group.loop_elements() %}
+            <div class="settings-element col-{{ element.col }} py-1" setting-type="{{ element.settings_type }}" settings-element-key="{{ element.key }}">
+                {% include element.template %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="settings-footer d-flex justify-content-end border-top my-4 py-2">
+        <button type="button" class="btn-setting-save btn btn-primary btn-sm">
+            Save
+        </button>
+    </div>
+</div>

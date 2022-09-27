@@ -1,0 +1,11 @@
+.setting-element-title{
+  font-size: 1.0rem !important;
+}
+
+.setting-element-description{
+  font-size: 0.85rem !important;
+}
+
+.settings-group:not([has-changes]) > .open-changes{
+  display: none;
+}
