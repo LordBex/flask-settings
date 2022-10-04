@@ -1,5 +1,5 @@
-from flasky_settings.settings import SettingsElement, SettingClass
-from flasky_settings.error import ValidationError, ParsingError
+from ..settings import SettingsElement, SettingClass
+from flasky_settings.error import ValidationError
 
 
 class SE_Bool(SettingsElement):
@@ -119,4 +119,7 @@ class SE_Select(SettingsElement):
             yield {
                 'name': str(i),
                 'active': active
-            }
+            }        
+            
+            
+            

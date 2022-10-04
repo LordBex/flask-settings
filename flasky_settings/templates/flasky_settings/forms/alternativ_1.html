@@ -1,0 +1,17 @@
+<div class="settings-form d-flex" setting-form-key="{{ setting_form.get_key() }}">
+    <div class="align-self-center w-100">
+        <div class="settings-element-container row m-0">
+            {% for element in setting_form.loop_elements() %}
+                <div class="settings-element col-{{ element.col }} px-1 py-1" setting-type="{{ element.settings_type }}" settings-element-key="{{ element.key }}">
+                    {% include element.template %}
+                </div>  
+            {% endfor %}
+        </div>
+    </div>
+    <div class="flex-shrink align-self-end mx-2 py-1 ps-2">
+        <button type="button" class="submit-setting-form btn btn-sm btn-outline-secondary">
+            {{ setting_form.btn_title }}
+        </button>
+    </div>
+
+</div>

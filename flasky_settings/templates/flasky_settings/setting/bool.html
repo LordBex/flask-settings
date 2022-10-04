@@ -3,7 +3,9 @@
     {% include 'flasky_settings/setting/sub/title_div.html' %}
 
     <div class="form-check form-switch">
-        <input class="form-check-input observed-input" type="checkbox" role="switch" {% if setting_group[element.key] %} checked {% endif %}>
+        {% with form_switch_bool_value = setting_group[element.key] if setting_group else element.default  %}
+        <input class="form-check-input observed-input" type="checkbox" role="switch"  {% if form_switch_bool_value %} checked {% endif %}>
+        {% endwith %}
     </div>
 </div>
 

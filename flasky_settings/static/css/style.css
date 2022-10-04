@@ -9,3 +9,7 @@
 .settings-group:not([has-changes]) > .open-changes{
   display: none;
 }
+
+.settings-element-container{
+  place-items: end;
+}

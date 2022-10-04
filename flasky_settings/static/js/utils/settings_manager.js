@@ -4,7 +4,7 @@ import * as ElementParser from './element_parser.js'
 const html_element = $('settings_meta')
 
 // load_configs_from_document
-const settings_endpoint = $(html_element).attr('endpoint').replace(/\/$/gm, '');        // url for the flasky-settings endpoint
+const settings_endpoint = document.querySelector('meta[name="flasky-settings-enpoint"]').content     // url for the flasky-settings endpoint
 
 
 // set state functions 
@@ -35,14 +35,13 @@ function get_setting_group_data(setting_group){
 // init functions
 
 export function init_listener() {
-
     // BUTTON - Save SettingsGroup
     $("body").on("click", ".btn-setting-save", function () {
         let settings_group = $(this).closest(".settings-group");
         let settings_key = $(settings_group).attr("setting-group-key");
         let data = get_setting_group_data(settings_group)
         // generate endpoint url
-        let url = [settings_endpoint, settings_key, "set"].join("/");
+        let url = [settings_endpoint, 's', settings_key, "set"].join("/");
         // sending requeset
         fetch(url, {
             method: "post",

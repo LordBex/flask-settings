@@ -1,4 +1,11 @@
+class FormNotFound(Exception):
+    def __init__(self, form, **data):
+        self.message = f"Form '{str(form)}' is not a SubClass from SettingsForm !"
+        self.append_data = data
+        super().__init__(self.message)
 
+    def __str__(self):
+        return f'[FlaskSettings] {self.message}'
 
 class ValidationError(Exception):
     def __init__(self, message=None, **data):

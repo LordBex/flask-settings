@@ -1,0 +1,14 @@
+<div class="settings-form" setting-form-key="{{ setting_form.get_key() }}">
+    <div class="settings-element-container row">
+        {% for element in setting_form.loop_elements() %}
+            <div class="settings-element col-{{ element.col }} py-1" setting-type="{{ element.settings_type }}" settings-element-key="{{ element.key }}">
+                {% include element.template %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="settings-footer d-flex justify-content-end border-top my-4 py-2">
+        <button type="button" class="submit-setting-form btn btn-primary btn-sm">
+            {{ setting_form.btn_title }}
+        </button>
+    </div>
+</div>

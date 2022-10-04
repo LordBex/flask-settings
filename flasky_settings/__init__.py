@@ -4,7 +4,7 @@ from werkzeug.local import LocalProxy
 blueprint: Blueprint
 app: Flask
 logger = LocalProxy(lambda: app.logger)
-
+codec_string = 'utf-8'
 
 def create_blueprint(flask_app, name: str = 'settings'):
     global app
@@ -12,6 +12,7 @@ def create_blueprint(flask_app, name: str = 'settings'):
     global logger
 
     app = flask_app
+    _set_defautl_configs(app)
 
     blueprint = Blueprint(
         name,
@@ -25,5 +26,6 @@ def create_blueprint(flask_app, name: str = 'settings'):
 
     return blueprint
 
-
+def _set_defautl_configs(app):
+    app.config.setdefault('FLSETT_AUTO_SAVE_SETTINGS', False)
 

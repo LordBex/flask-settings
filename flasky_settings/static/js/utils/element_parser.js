@@ -12,7 +12,6 @@ export function parse_element(element){
     alert('[Error][SettingsElement] parsing function for "'+ type +'" not exist')
 }
 
-
 export function regist_parsing_function(type, f){
     parsing_functions[type] = f
 }
@@ -43,7 +42,6 @@ function parse_select_element(element){
     return value
 }
 regist_parsing_function('select', parse_select_element)
-
 
 function parse_text_element(element){
     let value = $('textarea', element).val()

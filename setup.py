@@ -10,14 +10,14 @@ def read(fname):
 
 setup(
     name='flasky-settings',
-    version='0.0.1.1',
+    version='0.0.1.2',
     url='https://github.com/LordBex/flasky-settings',
     license='',
     author='lordbex',
     author_email='lordibex@protonmail.com',
     description='Flask extension that includes a Settings-Manager in your project',
-    long_description=read('README.md'),
-    packages=['flasky_settings', 'flasky_settings.settings'],
+    long_description=read('README.rst'),
+    packages=['flasky_settings', 'flasky_settings.settings', 'flasky_settings.elements'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
