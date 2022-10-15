@@ -1,11 +1,7 @@
-
+import {config} from '../init.js'
 import * as ElementParser from './element_parser.js'
 
 const html_element = $('settings_meta')
-
-// load_configs_from_document
-const settings_endpoint = document.querySelector('meta[name="flasky-settings-enpoint"]').content     // url for the flasky-settings endpoint
-
 
 // set state functions 
 
@@ -31,7 +27,6 @@ function get_setting_group_data(setting_group){
     return data
 }
 
-
 // init functions
 
 export function init_listener() {
@@ -41,7 +36,7 @@ export function init_listener() {
         let settings_key = $(settings_group).attr("setting-group-key");
         let data = get_setting_group_data(settings_group)
         // generate endpoint url
-        let url = [settings_endpoint, 's', settings_key, "set"].join("/");
+        let url = [config.settings_endpoint, 's', settings_key, "set"].join("/");
         // sending requeset
         fetch(url, {
             method: "post",

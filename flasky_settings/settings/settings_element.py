@@ -6,12 +6,15 @@ class SettingsElement:
     settings_type = 'default'
     _none_allowed: bool = False
     _default = None
+    
+    def format_value(self, value):
+        return value
 
-    def to_validation(self, v) -> (bool, str):
+    def to_validation(self, v) -> tuple[bool, str]:
         if not self.none_allowed and v is None:
             raise ValidationError(message='"None" is not allowed !', obj=self)
 
-    def parse_value(self, value):
+    def _parse_value(self, value):
         return value
 
     def __init__(self, key, title='', description='', default=None, setting=None, none_allowed: bool | None = None,

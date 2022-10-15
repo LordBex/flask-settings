@@ -48,3 +48,12 @@ function parse_text_element(element){
     return value
 }
 regist_parsing_function('text', parse_text_element)
+
+function parse_datetime_element(element){
+    
+    let input_element = $("input", element).get();
+    let td = window.datetime_elements[input_element]
+    let value = td.viewDate
+    return value
+}
+regist_parsing_function('datetime', parse_datetime_element)

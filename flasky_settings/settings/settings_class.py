@@ -44,6 +44,12 @@ class SettingClass:
     def __getitem__(self, item):
         return self.__getattribute__(item)
 
+    def get_value_formattet(self, key):
+        se = self.elements.get(key, None)
+        v = self.__getattribute__(key)
+        v = se.format_value(v)
+        return v
+    
     # save / loading - configuration
 
     def generate_file_name(self):

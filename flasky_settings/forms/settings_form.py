@@ -8,7 +8,7 @@ class SettingsForm:
 
     @classmethod
     def on_data(cls, data):
-        pass
+        return 'Success'
 
     @classmethod
     def get_form(cls):

@@ -1,19 +1,21 @@
-from ..settings import SettingsElement, SettingClass
+from regex import R
+from ..settings import SettingsElement, SettingClass, SettingItemsList
+from ..settings.settings_item import setting_item_tuple
 from flasky_settings.error import ValidationError
-
+from datetime import datetime
 
 class SE_Bool(SettingsElement):
     template = '/flasky_settings/setting/bool.html'
     settings_type = 'bool'
     _none_allowed = True
 
-    def to_validation(self, v) -> (bool, str):
+    def to_validation(self, v) -> tuple[bool, str]:
         super().to_validation(v)
 
         if not isinstance(v, bool):
             raise ValidationError(message=f'ValueType is not correct (Type= {str(type(v))}). Must be Bool !')
 
-    def parse_value(self, v):
+    def _parse_value(self, v):
         if isinstance(v, bool):
             return v
         if isinstance(v, str):
@@ -35,7 +37,7 @@ class SE_String(SettingsElement):
     input_type = 'text'
     _default = ''
 
-    def to_validation(self, v) -> (bool, str):
+    def to_validation(self, v) -> tuple[bool, str]:
         super().to_validation(v)
         if not isinstance(v, str):
             raise ValidationError(message=f'[StringElement] ValueType is not correct (Type= {str(type(v))}). Must be String ! ')
@@ -50,14 +52,14 @@ class SE_String_Split(SettingsElement):     # TODO Mach das mit einem HTML Templ
     input_type = 'text'
     _default = []
 
-    def to_validation(self, v) -> (bool, str):
+    def to_validation(self, v) -> tuple[bool, str]:
         super().to_validation(v)
         if not isinstance(v, list):
             raise ValidationError(
                 message=f'[StringElement] ValueType is not correct (Type= {str(type(v))}). Must be List ! '
             )
 
-    def parse_value(self, v: str | list):
+    def _parse_value(self, v: str | list):
         if isinstance(v, str):      # TODO better type checking
             l: list[str] = v.split(';')
             v = list(map(lambda s: s.strip(), l))
@@ -71,7 +73,7 @@ class SE_Text(SettingsElement):
     template = '/flasky_settings/setting/text.html'
     settings_type = 'text'
 
-    def to_validation(self, v) -> (bool, str):
+    def to_validation(self, v) -> tuple[bool, str]:
         super().to_validation(v)
         if not isinstance(v, str):
             raise ValidationError(message=f'[TextElement] ValueType is not correct (Type= {str(type(v))}). Must be String ! ')
@@ -84,7 +86,7 @@ class SE_MultiSelect(SettingsElement):
     template = '/flasky_settings/setting/multi_select_as_list.html'
     settings_type = 'multi-select'
 
-    def to_validation(self, v) -> (bool, str):
+    def to_validation(self, v) -> tuple[bool, str]:
         super().to_validation(v)
         if not isinstance(v, list):
             raise ValidationError(message=f'[MultiSelect] ValueType is not correct (Type= {str(type(v))}). Must be List !')
@@ -106,20 +108,47 @@ class SE_Select(SettingsElement):
     template = '/flasky_settings/setting/select.html'
     settings_type = 'select'
 
-    def to_validation(self, v) -> (bool, str):
+    def to_validation(self, v) -> tuple[bool, str]:
         super().to_validation(v)
 
     def init(self, items: list = '', **kwargs):
         self.items = items
+        
+    def __loop_list(self, active_key):
+        for i in self.items:
+            active = (i == active_key)
+            yield active, {
+                'key': str(i),
+                'title': str(i),
+            } 
+            
+    def __loop_settings_items(self, active_key):
+        self.items: SettingItemsList
+        for i in self.items.loop_items():
+            active = (i.key == active_key)
+            yield active, i
 
     def loop_items(self, setting_group: SettingClass):
-        v = setting_group[self.key]
-        for i in self.items:
-            active = (i == v)
-            yield {
-                'name': str(i),
-                'active': active
-            }        
+        active_key = setting_group[self.key]
+        if isinstance(self.items, list):
+            yield from self.__loop_list(active_key)
+        elif isinstance(self.items, SettingItemsList):
+            yield from self.__loop_settings_items(active_key)
+        # TODO raise Unknow Looping Item Type or something else xD
+    
+    def format_value(self, v):
+        if isinstance(self.items, list):
+            return v
+        elif isinstance(self.items, SettingItemsList):
+            return self.items.key_to_real_value(v)
             
-            
-            
+
+class SE_DateTime(SettingsElement):
+    template = '/flasky_settings/setting/datetime.html'
+    settings_type = 'datetime'
+    _default = ''
+
+    def to_validation(self, v) -> tuple[bool, str]:
+        super().to_validation(v)
+        # TODO date-time parsing
+

@@ -10,7 +10,7 @@ def ping():
     return 'ping'
 
 
-@blueprint.post('/s/<setting_key>/set')               # TODO adding Event Function subscribe
+@blueprint.post('/s/<setting_key>/set')
 def set_value(setting_key):
     setting: SettingClass = SettingClass.get_group(setting_key)
     if not setting:
@@ -21,11 +21,15 @@ def set_value(setting_key):
     return 'Success'
 
 
-@blueprint.post('/f/<form_key>')               # TODO adding Event Function subscribe
+@blueprint.post('/f/<form_key>')
 def setting_form_enpoint(form_key):
     for subc in SettingsForm.__subclasses__():
         if subc.get_key() == form_key:
-            subc.on_data(request.json)
-            return 'Success'
+            r = subc.on_data(request.json)
+            if r is True:
+                return 'Success'
+            if r is None:
+                return 'Unknow State'
+            return r
     raise FormNotFound(form=form_key)
 
