@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='flasky-settings',
-    version='0.0.1.5',
+    version='0.0.2.0',
     url='https://github.com/LordBex/flasky-settings',
     license='',
     author='lordbex',
