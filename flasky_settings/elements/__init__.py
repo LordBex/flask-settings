@@ -1,8 +1,9 @@
-from regex import R
+
 from ..settings import SettingsElement, SettingClass, SettingItemsList
 from ..settings.settings_item import setting_item_tuple
 from flasky_settings.error import ValidationError
 from datetime import datetime
+
 
 class SE_Bool(SettingsElement):
     template = '/flasky_settings/setting/bool.html'
@@ -94,14 +95,39 @@ class SE_MultiSelect(SettingsElement):
     def init(self, items: list = '', **kwargs):
         self.items = items
 
-    def loop_items(self, setting_group: SettingClass):
-        v = setting_group[self.key]
+    def __loop_list(self, active_key):
         for i in self.items:
-            active = i in v
-            yield {
-                'name': str(i),
-                'active': active
-            }
+            active = (i in active_key)
+            if isinstance(i, dict):
+                item = i
+            elif isinstance(i, tuple):
+                k, t = i
+                item = {
+                    'key': str(k),
+                    'title': str(t),
+                }
+            else:
+                item = {
+                    'key': str(i),
+                    'title': str(i),
+                }
+
+            yield active, item
+
+    def __loop_settings_items(self, active_keys):
+        self.items: SettingItemsList
+        for i in self.items.loop_items():
+            active = (i.key in active_keys)
+            yield active, i
+
+    def loop_items(self, setting_group: SettingClass = None):
+        active_keys = setting_group[self.key] if setting_group is not None else []
+        if isinstance(self.items, list):
+            yield from self.__loop_list(active_keys)
+        elif isinstance(self.items, SettingItemsList):
+            yield from self.__loop_settings_items(active_keys)
+        else:
+            yield from self.__loop_list(active_keys)
 
 
 class SE_Select(SettingsElement):
@@ -117,10 +143,21 @@ class SE_Select(SettingsElement):
     def __loop_list(self, active_key):
         for i in self.items:
             active = (i == active_key)
-            yield active, {
+            if isinstance(i, dict):
+                item = i
+            elif isinstance(i, tuple):
+                k, t = i
+                item = {
+                    'key': str(k),
+                    'title': str(t),
+                } 
+            else:
+                item = {
                 'key': str(i),
                 'title': str(i),
-            } 
+                } 
+                
+            yield active, item
             
     def __loop_settings_items(self, active_key):
         self.items: SettingItemsList
@@ -128,12 +165,14 @@ class SE_Select(SettingsElement):
             active = (i.key == active_key)
             yield active, i
 
-    def loop_items(self, setting_group: SettingClass):
-        active_key = setting_group[self.key]
+    def loop_items(self, setting_group: SettingClass = None):
+        active_key = setting_group[self.key] if setting_group else None
         if isinstance(self.items, list):
             yield from self.__loop_list(active_key)
         elif isinstance(self.items, SettingItemsList):
             yield from self.__loop_settings_items(active_key)
+        else:
+            yield from self.__loop_list(active_key)
         # TODO raise Unknow Looping Item Type or something else xD
     
     def format_value(self, v):
@@ -151,4 +190,9 @@ class SE_DateTime(SettingsElement):
     def to_validation(self, v) -> tuple[bool, str]:
         super().to_validation(v)
         # TODO date-time parsing
+        
 
+class SE_Date(SE_DateTime):
+    template = '/flasky_settings/setting/datetime.html'
+    settings_type = 'date'
+    _default = ''

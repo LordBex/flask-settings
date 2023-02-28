@@ -1,5 +1,5 @@
 <!-- TextElement -->
 <div>
     {% include 'flasky_settings/setting/sub/title_div.html' %}
-    <textarea class="form-control observed-input" rows="{{ element.rows }}">{% if setting_group %}{{ setting_group[element.key] }}{% else %} {{ element.default }} {% endif %}</textarea>
+    <textarea class="form-control observed-input" rows="{{ element.rows }}">{% if setting_group %}{{ setting_group[element.key] }}{% else %}{{ element.default or '' }}{% endif %}</textarea>
 </div>

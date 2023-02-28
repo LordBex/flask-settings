@@ -6,6 +6,7 @@ from ..error import PropertyPermissionError
 from .settings_element import SettingsElement
 from .. import codec_string, logger
 
+
 class SettingClass:
     all_settings = {}
     elements: dict[str, SettingsElement] = {}
@@ -22,15 +23,15 @@ class SettingClass:
         for v in self.elements.values():
             yield v
 
-    def set_property(self, k, v):
+    def set_property(self, k, v, safe=False):
         if k in self.elements.keys():
             setattr(self, k, v)
-        else:
+        elif safe is False:
             raise PropertyPermissionError(property_name=k)
 
-    def set_properties(self, d: dict):
+    def set_properties(self, d: dict, safe=False):
         for k, v in d.items():
-            self.set_property(k, v)
+            self.set_property(k, v, safe=safe)
 
     def get_property(self, k, default=None) -> any:
         if k in self.elements.keys():
@@ -82,7 +83,7 @@ class SettingClass:
     def load_from_file(self, file):
         with codecs.open(file, 'r', codec_string) as f:
             d = json.load(f)
-            self.set_properties(d)
+            self.set_properties(d, safe=True)
 
     def load(self):
         filename = self.generate_file_name()

@@ -4,9 +4,8 @@
     {% include 'flasky_settings/setting/sub/title_div.html' %}
 
     <select class="form-select form-select-sm observed-input">
-        {% for active, item in element.loop_items(setting_group) %}
+        {% for active, item in element.loop_items(setting_group or None) %}
             <option value="{{ item.key }}" {% if active %} selected {% endif %}>{{ item.title }}</option>
         {% endfor %}
     </select>
-
 </div>

@@ -3,7 +3,7 @@ window.flasky_settings = {}
 
 // loading config
 export const config = Object.freeze({
-    settings_endpoint: document.querySelector('meta[name="flasky-settings-enpoint"]').content.replace(/\/+$/, '')    // url for the flasky-settings endpoint
+    settings_endpoint: document.querySelector('meta[name="flasky-settings-entpoint"]').content.replace(/\/+$/, '')    // url for the flasky-settings endpoint
 });
 
 var mobile_view = false;
@@ -14,11 +14,28 @@ window.datetime_elements = datetime_element_list
 
 $('.init-datetime').each(function(){
     let element = $(this).get(0)
-    let td = new TempusDominus(element, {
-        display: {
-            sideBySide: true
-        }
-    });
+    let td
+    let type = $(this).closest("[setting-type]").attr("setting-type")
+    switch(type){
+        case "datetime":
+            td = new TempusDominus(element, {
+                display: {
+                    sideBySide: true
+                }, 
+            });
+            break
+        case "date":
+            td = new TempusDominus(element, {
+                display: {
+                    components: {
+                        clock: false
+                    }
+                },
+            });
+            break
+    }
+
+
     datetime_element_list[element] = td
 }).get()
 
